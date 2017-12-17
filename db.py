@@ -3,6 +3,7 @@ import sys
 
 num_words = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f','g','h','i','j','k','l','m',0,1,2,3,4,5,6,7,8,9,'n','o','p','q','r','s','t','u','v','w','x','y','z',0,1,2,3,4,5,6,7,8,9]
 num_only = [0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9]
+bank_accounts = {}
 
 def get_virtual_ID():
     iter = 11
@@ -25,7 +26,6 @@ def get_account():
 def get_accounts(virtID,account_num,full_name,social,address,balance, bank_ID):
     issues = 0
     account_info = dict()
-    bank_accounts = dict()
     if bank_ID == 9999:
         for i in bank_accounts:
             if i == virtID:
@@ -57,3 +57,9 @@ def get_accounts(virtID,account_num,full_name,social,address,balance, bank_ID):
     else:
         print("You do not have access to this information.")
         sys.exit()
+
+def check_db(name):
+    for i in bank_accounts:
+        if name == bank_accounts[i][2]:
+            account = i
+            return account
