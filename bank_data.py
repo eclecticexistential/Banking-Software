@@ -36,25 +36,24 @@ def bank_options(account):
 def get_account_balance(account):
     bank_ID = id_bank()
     if bank_ID == 9999:
-        return "Your balance is: %.2f" % account.balance
+        return "Your balance is: %.2f" % account[4]
 
 def add_to_balance(account):
     bank_ID = id_bank()
     if bank_ID == 9999:
         deposit = int(input("How much are you depositing?"))
-        account.balance += deposit
-    return account.balance
+        account[4] += deposit
+    return account[4]
 
 def make_transaction(account):
     bank_ID = id_bank()
     if bank_ID == 9999:
         withdraw = int(input("How much are you withdrawing?"))
-        if account.balance > withdraw:
-            account.balance -= withdraw
-            print(account.balance)
-        elif account.balance < withdraw:
+        if account[4] > withdraw:
+            account[4] -= withdraw
+        elif account[4] < withdraw:
             print("Insufficient funds.")
-    return account.balance
+    return account[4]
 
 def get_info(account):
     bank_ID = id_bank()
@@ -62,7 +61,7 @@ def get_info(account):
         info = account.account_info
         for i in info:
             data = "\nVirtual ID: {} \nAccount Number: {} \nName: {} \nSocial: {} \nAddress: {}\n".format(i,info[i][0],
-                                                                ' '.join(info[i][1]),info[i][2],info[i][3])
+                                                                info[i][1],info[i][2],info[i][3])
             return data
     else:
         print("You do not have access to this information.")
