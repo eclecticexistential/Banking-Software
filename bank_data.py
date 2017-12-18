@@ -17,7 +17,6 @@ def id_bank():
 
 
 def bank_options(account):
-    print(account)
     while True:
         answer = input(
             "Type Q to quit, AB for account balance, AD for account deposit, AW for account withdraw, or AI for account details.").upper()
@@ -42,16 +41,25 @@ def get_account_balance(account):
 def add_to_balance(account):
     bank_ID = id_bank()
     if bank_ID == 9999:
-        deposit = int(input("How much are you depositing?"))
+        try:
+            deposit = float(input("How much are you depositing?"))
+        except ValueError:
+            print("Use numbers only.")
+            return add_to_balance(account)
         account[4] += deposit
         return account[4]
+
     else:
         sys.exit()
 
 def make_transaction(account):
     bank_ID = id_bank()
     if bank_ID == 9999:
-        withdraw = int(input("How much are you withdrawing?"))
+        try:
+            withdraw = float(input("How much are you withdrawing?"))
+        except ValueError:
+            print("Use numbers only.")
+            return make_transaction(account)
         if account[4] >= withdraw:
             account[4] -= withdraw
             return account[4]
@@ -103,20 +111,28 @@ def banker_options():
 
 def login():
     entry = "closed"
-    try:
-        username = str(input("What is your username?"))
-        password = str(input("What is your password?"))
-    except ValueError:
-        print("Cannot use all numbers.")
-        return login()
-    while entry == "closed":
-        entry = login_info.find_username(username,password)
-        if entry == "closed":
-            print("Invalid login information. Try again.")
+    username = str(input("What is your username?"))
+    if login_info.find_username(username) == True:
+        try:
+            password = str(input("What is your password?"))
+        except ValueError:
+            print("Cannot use all numbers.")
             return login()
-        elif entry == "open":
-            print("Welcome!")
-            return banker_options()
+        while entry == "closed":
+            entry = login_info.find_password(username,password)
+            if entry == "closed":
+                print("Invalid login information. Try again.")
+                return login()
+            elif entry == "open":
+                print("Welcome!")
+                return banker_options()
+    else:
+        print("User not found. Try again.")
+        counter = 0
+        if counter < 3:
+            return login()
+        else:
+            print("User does not exist. Contact Admin.")
+            sys.exit()
 
-# login()
-banker_options()
+login()

@@ -1,7 +1,14 @@
 
 usernames = {"jones@hotmail.com":"12345"}
 
-def find_username(current_user,password):
+def find_username(current_user):
+    for username in usernames:
+        if current_user == username:
+            return True
+        else:
+            return False
+
+def find_password(current_user,password):
     for username in usernames:
         if current_user == username:
             counter = 1
@@ -20,5 +27,3 @@ def find_username(current_user,password):
                     return entry
             if counter > 3:
                 print("Goodbye.")
-        elif current_user != username:
-            print("User does not exist. Contact Admin.")
