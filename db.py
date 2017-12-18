@@ -3,7 +3,8 @@ import sys
 
 num_words = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f','g','h','i','j','k','l','m',0,1,2,3,4,5,6,7,8,9,'n','o','p','q','r','s','t','u','v','w','x','y','z',0,1,2,3,4,5,6,7,8,9]
 num_only = [0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9]
-bank_accounts = {}
+bank_accounts = {"x11s8zx8k10" : {"43509320951",('j' , 'c'),'1234567','1234 Cuter Rd.',"0"}}
+print(bank_accounts["x11s8zx8k10"])
 
 def get_virtual_ID():
     iter = 11
@@ -51,7 +52,7 @@ def get_accounts(virtID,account_num,full_name,social,address,balance, bank_ID):
             account_info[1] = full_name
             account_info[2] = social
             account_info[3] = address
-            account_info[4] = balance
+            account_info[4] = int(balance)
             bank_accounts[virtID] = account_info
             return bank_accounts
     else:
