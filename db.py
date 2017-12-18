@@ -54,7 +54,7 @@ def get_accounts(virtID,account_num,full_name,social,address,balance, bank_ID):
             account_info[3] = address
             account_info[4] = int(balance)
             bank_accounts[virtID] = account_info
-            return bank_accounts
+            return bank_accounts[virtID]
     else:
         print("You do not have access to this information.")
         sys.exit()

@@ -17,6 +17,7 @@ def id_bank():
 
 
 def bank_options(account):
+    print(account)
     while True:
         answer = input(
             "Type Q to quit, AB for account balance, AD for account deposit, AW for account withdraw, or AI for account details.").upper()
@@ -43,40 +44,41 @@ def add_to_balance(account):
     if bank_ID == 9999:
         deposit = int(input("How much are you depositing?"))
         account[4] += deposit
-    return account[4]
+        return account[4]
+    else:
+        sys.exit()
 
 def make_transaction(account):
     bank_ID = id_bank()
     if bank_ID == 9999:
         withdraw = int(input("How much are you withdrawing?"))
-        if account[4] > withdraw:
+        if account[4] >= withdraw:
             account[4] -= withdraw
+            return account[4]
         elif account[4] < withdraw:
             print("Insufficient funds.")
-    return account[4]
 
 def get_info(account):
     bank_ID = id_bank()
     if bank_ID == 9999:
-        info = account.account_info
-        for i in info:
-            data = "\nVirtual ID: {} \nAccount Number: {} \nName: {} \nSocial: {} \nAddress: {}\n".format(i,info[i][0],
-                                                                info[i][1],info[i][2],info[i][3])
-            return data
+        data = "Account Number: {} \nName: {} \nSocial: {} \nAddress: {}\n".format(account[0],account[1],account[2],account[3])
+        return data
     else:
         print("You do not have access to this information.")
 
 def verify(data):
-    question = "Is '{}' correct?".format(data)
-    answer = str(input(question)).lower()
-    if answer == 'no':
-        data = str(input("Please provide the correct information."))
-        verify(data)
-    elif answer == 'yes':
-        return data
+    while True:
+        question = "Is '{}' correct?".format(data)
+        answer = str(input(question)).lower()
+        if answer == 'no':
+            data = str(input("Please provide the correct information."))
+        elif answer == 'yes':
+            new_info = data
+            return new_info
+            break
 
 def banker_options():
-    bank_ID = id_bank()
+    bank_ID = 9999
     #set up pin...
     options = str(input("Do you want to add a new customer?")).lower()
     if options == 'yes':
@@ -87,18 +89,10 @@ def banker_options():
         address = str(input("Address?"))
         verify(address)
         social = str(input("Social?"))
-        if len(social) < 7:
-            print("Not enough numbers.")
-            verify(social)
-        elif len(social) > 8:
-            print("Numbers only, please.")
-            verify(social)
-        elif len(social) != 7:
-            print("Invalid social. Contact Admin.")
-            banker_options()
+        verify(social)
         new_person = bankingClass.Person(first_name,last_name,social,address)
-        new_person.create_account(bank_ID)
-        return bank_options(new_person)
+        new_account = new_person.create_account(bank_ID)
+        return bank_options(new_account)
     elif options == 'no':
         name = str(input("Account name?"))
         account = db.check_db(name)
@@ -124,4 +118,5 @@ def login():
             print("Welcome!")
             return banker_options()
 
-login()
+# login()
+banker_options()

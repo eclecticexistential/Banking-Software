@@ -16,3 +16,4 @@ class Person(object):
         self.full_name = self.first_name, self.last_name
         self.account_info = db.get_accounts(virtID, account_num, self.full_name, self.social, self.address,self.balance,bank_ID)
         print("Account saved.")
+        return self.account_info
