@@ -1,12 +1,10 @@
 
-usernames = {"jones@hotmail.com":"12345"}
+usernames = {"jones@hotmail.com":"12345", "elizabeth@gmail.com":"98765"}
 
 def find_username(current_user):
     for username in usernames:
-        if current_user == username:
+        if username == current_user:
             return True
-        else:
-            return False
 
 def find_password(current_user,password):
     for username in usernames:

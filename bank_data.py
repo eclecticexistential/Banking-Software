@@ -76,7 +76,7 @@ def get_info(account):
 
 def verify(data):
     while True:
-        question = "Is '{}' correct?".format(data)
+        question = "Is '{}' correct? ".format(data)
         answer = str(input(question)).lower()
         if answer == 'no':
             data = str(input("Please provide the correct information."))
@@ -85,19 +85,36 @@ def verify(data):
             return new_info
             break
 
+
+
+def check_soc(social):
+    while True:
+        social = str(social)
+        if len(social) == 9:
+            return social
+            break
+        elif len(social) >= 9:
+            print("Social too long.")
+            try:
+                social = int(input("Social?"))
+            except ValueError:
+                print("Use only numbers.")
+        elif len(social) < 9:
+            print("A number or two is missing.")
+            try:
+                social = int(input("Social?"))
+            except ValueError:
+                print("Use numbers only.")
+
 def banker_options():
     bank_ID = 9999
     #set up pin...
     options = str(input("Do you want to add a new customer?")).lower()
     if options == 'yes':
-        first_name = str(input("First Name?"))
-        verify(first_name)
-        last_name = str(input("Last Name?"))
-        verify(last_name)
-        address = str(input("Address?"))
-        verify(address)
-        social = str(input("Social?"))
-        verify(social)
+        first_name = verify(str(input("First Name?")))
+        last_name = verify(str(input("Last Name?")))
+        address = verify(str(input("Street Address?")))
+        social = verify(check_soc(str(input("Social?"))))
         new_person = bankingClass.Person(first_name,last_name,social,address)
         new_account = new_person.create_account(bank_ID)
         return bank_options(new_account)
