@@ -1,4 +1,5 @@
 import sys
+import bank_data
 
 def pin_number(account):
     tries = 0
@@ -24,5 +25,6 @@ def atm_options(account):
         break
     if entry > 0:
         while True:
-            return bank_options(account)
+            atm = True
+            return bank_data.bank_options(account,atm)
             break

@@ -4,19 +4,20 @@ import bankingClass
 import db
 
 def id_bank():
-    try:
-        bank_ID = int(input("What is your bank identification?"))
-    except ValueError:
-        print("That ID is invalid.")
-        return id_bank()
-    if bank_ID == bank_ID:
-        return bank_ID
-    else:
-        print("Please contact admin.")
-        sys.exit()
+    return 9999
+    # try:
+    #     bank_ID = int(input("What is your bank identification?"))
+    # except ValueError:
+    #     print("That ID is invalid.")
+    #     return id_bank()
+    # if bank_ID == bank_ID:
+    #     return bank_ID
+    # else:
+    #     print("Please contact admin.")
+    #     sys.exit()
 
 
-def bank_options(account):
+def bank_options(account,banker=False,atm=False):
     while True:
         answer = input(
             "Type Q to quit, AB for account balance, AD for account deposit, AW for account withdraw, or AI for account details.").upper()
@@ -29,8 +30,11 @@ def bank_options(account):
         elif answer == "AI":
             print(get_info(account))
         elif answer == "Q":
-            print("Have a nice day!")
-            sys.exit()
+            if banker == True:
+                return banker_account()
+            else:
+                print("Have a nice day!")
+                sys.exit()
 
 
 def get_account_balance(account):
@@ -106,6 +110,15 @@ def check_soc(social):
             except ValueError:
                 print("Use numbers only.")
 
+def banker_account():
+    name = str(input("Type L to log off or full name to access account.")).lower()
+    if len(name) == 1:
+        print("Have a good day!")
+        sys.exit()
+    else:
+        account = db.check_db(name)
+        return bank_options(account,True)
+
 def banker_options():
     bank_ID = 9999
     #set up pin...
@@ -119,9 +132,7 @@ def banker_options():
         new_account = new_person.create_account(bank_ID)
         return bank_options(new_account)
     elif options == 'no':
-        name = str(input("Account name?"))
-        account = db.check_db(name)
-        return bank_options(account)
+        return banker_account()
     else:
         print("Sorry, didn't quite get that.")
         return banker_options()
